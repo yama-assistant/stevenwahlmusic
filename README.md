@@ -4,7 +4,7 @@ Hand-coded replacement for the Nicepage site at https://sfrancisw.github.io/stev
 Development happens here (yama-assistant); Steven copies the finished files into `sfrancisw/stevenwahlmusic` himself.
 
 ## Structure
-- `index.html` – home: hero/contact CTA → credits → music → testimonials → about → contact
+- `index.html` – home: hero/contact CTA → music → testimonials → about → credits → contact
 - `blog/` – blog index + one HTML file per post
 - `css/style.css` – all styles (colors/spacing as CSS variables at the top)
 - `js/main.js` – genre switcher for the YouTube player
