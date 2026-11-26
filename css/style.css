@@ -118,7 +118,13 @@ a:hover { color: var(--accent-hover); }
 .about { display: flex; flex-wrap: wrap; gap: 32px; align-items: center; }
 .about img { width: 180px; height: 180px; border-radius: 50%; flex: 0 0 auto; }
 .about-text { flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
-.about-text p { margin: 0; font-size: 19px; }
+.about { align-items: flex-start; }
+.about-text p { margin: 0; font-size: 18px; }
+.facts { margin: 4px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.facts div { padding: 14px 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+.facts dt { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.facts dd { margin: 4px 0 0; font-size: 15px; font-weight: 600; line-height: 1.45; }
+.facts .wide { grid-column: 1 / -1; }
 .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
 .links a {
   display: inline-flex; align-items: center; gap: 8px;
