@@ -88,3 +88,16 @@
   go(0);
   timer = setInterval(tick, AUTO_MS);
 })();
+
+// Dynamic age in the About intro, calculated from data-birthday (YYYY-MM-DD).
+// Without JS the span stays hidden and the sentence reads "a composer and…".
+(function () {
+  var el = document.querySelector('.age[data-birthday]');
+  if (!el) return;
+  var p = el.getAttribute('data-birthday').split('-').map(Number);
+  var now = new Date();
+  var age = now.getFullYear() - p[0];
+  if (now.getMonth() + 1 < p[1] || (now.getMonth() + 1 === p[1] && now.getDate() < p[2])) age--;
+  el.textContent = age + '-year-old ';
+  el.hidden = false;
+})();
