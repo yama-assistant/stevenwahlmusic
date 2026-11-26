@@ -2,17 +2,34 @@
 // (single video: https://www.youtube-nocookie.com/embed/VIDEO_ID,
 //  playlist:     https://www.youtube-nocookie.com/embed/videoseries?list=PLAYLIST_ID).
 // Buttons without data-embed show a placeholder until a playlist is added.
+// Privacy (two-click): nothing is loaded from YouTube until the visitor clicks
+// "Load YouTube video". After that, switching genres loads players directly
+// for the rest of the visit (consent is kept in memory only, not stored).
 (function () {
   var buttons = document.querySelectorAll('.genre');
   var player = document.getElementById('player');
   if (!buttons.length || !player) return;
+  var ytAllowed = false;
 
   function show(btn) {
     buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
     var url = btn.getAttribute('data-embed');
     var name = btn.textContent.trim();
     player.textContent = '';
-    if (url) {
+    if (url && !ytAllowed) {
+      var gate = document.createElement('div');
+      gate.className = 'yt-gate';
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'btn btn-primary';
+      b.textContent = 'Load YouTube video';
+      b.addEventListener('click', function () { ytAllowed = true; show(btn); });
+      var note = document.createElement('p');
+      note.innerHTML = 'Loading the video connects to YouTube (Google), which receives your IP address and may set cookies. See the <a href="privacy.html#youtube">privacy policy</a>.';
+      gate.appendChild(b);
+      gate.appendChild(note);
+      player.appendChild(gate);
+    } else if (url) {
       var frame = document.createElement('iframe');
       frame.src = url;
       frame.title = name + ' – YouTube player';

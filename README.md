@@ -8,6 +8,8 @@ Development happens here (yama-assistant); Steven copies the finished files into
 - `blog/` – blog index + one HTML file per post
 - `css/style.css` – all styles (colors/spacing as CSS variables at the top)
 - `js/main.js` – genre switcher for the YouTube player
+- `imprint.html`, `privacy.html` – legal pages (fill in the `[placeholders]` before going live)
+- `fonts/` – self-hosted Manrope (no Google Fonts requests)
 - `images/`, `files/` – screenshots, avatar, favicon, CV
 - `Blogs/…`, `Music-Blog.html`, `Steven-Wahl---Music-Composer.html` – redirects from old Nicepage URLs
 
