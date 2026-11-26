@@ -30,6 +30,8 @@
 })();
 
 // Testimonial carousel: one quote at a time, arrows + dots + swipe.
+// Auto-advances every 10 s until the visitor navigates manually (then it stops for good);
+// it also pauses while hovered or focused so a quote isn't swapped mid-read.
 // Without JS all quotes simply show stacked.
 (function () {
   var root = document.querySelector('.carousel');
@@ -38,13 +40,14 @@
   var dotsBox = root.querySelector('.carousel-dots');
   if (slides.length < 2) return;
   var current = 0, dots = [];
+  var AUTO_MS = 10000, timer = null, stopped = false, paused = false;
 
   slides.forEach(function (s, i) {
     var d = document.createElement('button');
     d.type = 'button';
     d.className = 'carousel-dot';
     d.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
-    d.addEventListener('click', function () { go(i); });
+    d.addEventListener('click', function () { manual(i); });
     dotsBox.appendChild(d);
     dots.push(d);
   });
@@ -62,7 +65,7 @@
   }
 
   root.querySelectorAll('.carousel-btn').forEach(function (b) {
-    b.addEventListener('click', function () { go(current + Number(b.getAttribute('data-dir'))); });
+    b.addEventListener('click', function () { manual(current + Number(b.getAttribute('data-dir'))); });
   });
 
   var startX = null;
@@ -70,10 +73,18 @@
   root.addEventListener('touchend', function (e) {
     if (startX === null) return;
     var dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 40) manual(current + (dx < 0 ? 1 : -1));
     startX = null;
   });
 
+  function manual(i) { stopped = true; clearInterval(timer); go(i); }
+  function tick() { if (!stopped && !paused && !document.hidden) go(current + 1); }
+  root.addEventListener('mouseenter', function () { paused = true; });
+  root.addEventListener('mouseleave', function () { paused = false; });
+  root.addEventListener('focusin', function () { paused = true; });
+  root.addEventListener('focusout', function () { paused = false; });
+
   root.classList.add('is-ready');
   go(0);
+  timer = setInterval(tick, AUTO_MS);
 })();
