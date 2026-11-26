@@ -166,3 +166,27 @@ a:hover { color: var(--accent-hover); }
   .contact .wrap { padding-top: 64px; padding-bottom: 64px; }
   .article { padding: 32px 20px 64px; }
 }
+
+/* Testimonial carousel: all slides share one grid cell, so the box keeps the
+   height of the longest quote and nothing jumps when switching. */
+.carousel .slides { display: grid; gap: 32px; }
+.carousel-nav { display: none; }
+.carousel.is-ready .slides { gap: 0; }
+.carousel.is-ready .slide { grid-area: 1 / 1; visibility: hidden; opacity: 0; transition: opacity .3s ease, visibility 0s linear .3s; }
+.carousel.is-ready .slide.is-active { visibility: visible; opacity: 1; transition: opacity .3s ease; }
+.carousel.is-ready .carousel-nav { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+.carousel-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--ink); border: 1px solid #CFCEC7; cursor: pointer;
+}
+.carousel-btn:hover { border-color: var(--ink); }
+.carousel-btn svg { width: 18px; height: 18px; }
+.carousel-dots { display: flex; gap: 4px; }
+.carousel-dot {
+  width: 28px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.carousel-dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #CFCEC7; transition: background .2s, width .2s; }
+.carousel-dot[aria-current="true"]::before { width: 20px; border-radius: 4px; background: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .carousel.is-ready .slide { transition: none; } }
